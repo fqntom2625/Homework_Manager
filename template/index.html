@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>학생 목록</title>
+</head>
+<body>
+    <h2>등록된 학생 목록</h2>
+
+    <table border="1">
+        <tr>
+            <th>이름</th>
+            <th>반</th>
+            <th>요일</th>
+            <th>레벨</th>
+            <th>삭제</th>
+        </tr>
+        {% for s in students %}
+        <tr>
+            <td>{{ s[1] }}</td>
+            <td>{{ s[2] }}</td>
+            <td>{{ s[3] }}</td>
+            <td>{{ s[4] }}</td>
+            <td>
+                <form method="POST" action="/delete/{{ s[0] }}">
+                    <button type="submit">삭제</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <hr>
+    <h3>학생 추가</h3>
+    <form method="POST" action="/add">
+        이름: <input type="text" name="name" required><br>
+        반: <input type="text" name="class_name" required><br>
+        요일: 
+        <select name="day_group">
+            <option value="M">M</option>
+            <option value="F">F</option>
+        </select><br>
+        레벨: 
+        <select name="level">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select><br>
+
+        수행 항목 선택:<br>
+        <label><input type="checkbox" name="tasks" value="Listening"> Listening</label><br>
+        <label><input type="checkbox" name="tasks" value="Reading"> Reading</label><br>
+        <label><input type="checkbox" name="tasks" value="UCC"> UCC</label><br>
+
+        <button type="submit">추가</button>
+    </form>
+
+    <hr>
+    <h3>체크 페이지로 이동</h3>
+    <form method="GET" action="/check">
+        반: <input type="text" name="class" required>
+        요일: 
+        <select name="day">
+            <option value="M">M</option>
+            <option value="F">F</option>
+        </select>
+        레벨: 
+        <select name="level">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+        <button type="submit">체크하러 가기</button>
+    </form>
+</body>
+</html>
