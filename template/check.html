@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>과제 수행 체크</title>
+</head>
+<body>
+    <h2>{{ date }} 수행 체크</h2>
+    <h4>{{ class_name }} / {{ day_group }} / 레벨 {{ level }}</h4>
+
+    <form method="POST" action="/submit_check">
+        <input type="hidden" name="date" value="{{ date }}">
+
+        <table border="1">
+            <tr>
+                <th>학생 이름</th>
+                <th>항목</th>
+                <th>◯</th>
+                <th>△</th>
+                <th>✕</th>
+            </tr>
+
+            {% for student in students %}
+                {% for task in student_tasks[student[0]] %}
+                <tr>
+                    {% if loop.index == 1 %}
+                    <td rowspan="{{ student_tasks[student[0]]|length }}">{{ student[1] }}</td>
+                    {% endif %}
+                    <td>{{ task }}</td>
+                    <td><input type="radio" name="status_{{ student[0] }}_{{ task }}" value="○" required></td>
+                    <td><input type="radio" name="status_{{ student[0] }}_{{ task }}" value="△"></td>
+                    <td><input type="radio" name="status_{{ student[0] }}_{{ task }}" value="✕"></td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+
+        <br>
+        <button type="submit">저장</button>
+    </form>
+</body>
+</html>
